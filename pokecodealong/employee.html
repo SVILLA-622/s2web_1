@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Profiles</title>
+
+</head>
+<body>
+    <h1>Employee Profiles</h1>
+    <main>
+        <label for="employees">Select Employee:</label>
+        <select id="employees">
+            <option value="">-- Select an employee --</option>
+        </select>
+              <section class ="panel">
+                <p>&lt;&lt; Select an employee to display</p>
+              </section>
+
+                  
+    </main>
+    <script>
+        async function fetchEmployees() {
+            const res = await fetch(`https://dummyjson.com/users?limit=10`);
+            const userData = await res.json();
+            loopEmployees(userData.users);
+        }
+		
+		//userData contains an object with a users array but loopEmployees() is expecting an array
+        function loopEmployees(users){
+            const select = document.getElementById("employees"); // no # before employee
+            for(const user of users){
+                const option = document.createElement("option");
+                option.value = user.id;
+                option.innerHTML = `${user.firstName} ${user.lastName}`;
+                select.appendChild(option);
+            } 
+            
+        }
+
+        async function getMyEmployee(e){
+		//need an await and fetch here
+            const userId = e.target.value;
+            if(!userId) {
+                return;
+            }
+            const res = await fetch(`https://dummyjson.com/users/${userId}`);
+            const user = await res.json();
+            const panel = document.querySelector(".panel");
+			//check that these are back ticks
+           panel.innerHTML = `
+           <img src="${user.image}" alt="${user.firstName} ${user.lastName}">
+           <div class="info">
+                <h2>${user.firstName} ${user.lastName}</h2>
+                <p><strong>Email:</strong> ${user.email}</p>
+                <p><strong>Phone:</strong> ${user.phone}</p>
+                <p><strong>Age:</strong> ${user.age}</p>
+                <p><strong>Gender:</strong> ${user.gender}</p>
+                <p><strong>Username:</strong> ${user.username}</p>
+                <p><strong>University:</strong> ${user.university}</p>
+                <p><strong>Company:</strong> ${user.company.name}</p>
+                <p><strong>Job:</strong> ${user.company.title}</p>
+                <p><strong>Department:</strong> ${user.company.department}</p>
+                <p><strong>Address:</strong> ${user.address.address}, ${user.address.city}, ${user.address.state}, ${user.address.postalCode}, ${user.address.country}</p>
+              </div>
+              `;
+            }
+
+            document.querySelector("#employees").addEventListener("change", getMyEmployee);
+
+            fetchEmployees();
+        
+
+    </script>
+     <style>
+        body{
+            font-family: system-ui, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        main{
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1{
+            text-align: center;
+        }
+
+        label{
+            font-weight: bold;
+        }
+
+        select{
+            padding: 1em;
+            font-size: 1em;
+            border: 1px solid grey;
+            border-radius: 5px;
+            background-color:white;
+        }
+/*should be .panel */
+        .panel{
+            display: flex;
+            flex-direction: row;
+            gap: 2em;
+            margin-top: 1em;
+            border: 1px solid #ddd;
+            padding:2em;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .panel img{
+            width: 180px;
+            height:180px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #4fc8ff;
+        }
+
+        .info{
+            flex:1;
+        }
+        
+        h2{
+            text-transform: capitalize;
+            margin-top:0;
+        }
+        .info p{
+            margin:0.7em 0;
+        }
+
+        @media(max-width: 600px){
+            .panel{
+                flex-direction:column;
+                align-items: center;
+            }
+        }
+
+
+
+
+    </style>
+    
+</body>
+</html>
