@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template 2</title>
+</head>
+<body>
+    <div class="cards-container">
+        <!-- Your cards will be added here using JavaScript -->
+    </div>
+
+    <script>
+        // Fetch data from this API
+        //The address of the API we want to get information from
+        const apiUrl = "https://reqres.in/api/users?per_page=12";
+        //Function that gets the users from the API
+        async function getUsers() {
+            //Sends request to the API and waits fro the response
+            const response = await fetch(apiUrl);
+        //Convert the API response into JavaScript data
+        const data = await response.json();
+        //Find the HTML element where the cards will go
+        const container = document.querySelector(".cards-container");
+        //Loop through every user returned by API
+        data.data.forEach(user=> {
+            //Create a new div element for the card
+            const card = document.createElement("div");
+            //Give the new div the CSS class "card"
+            card.className = "card";
+            //Put the user's information inside the card
+            card.innerHTML = `
+            <img src="${user.avatar}" alt="${user.first_name}">
+            <h2>${user.first_name} ${user.last_name}</h2>
+            <p>${user.email}</p>
+            `;
+            //Add the completed card to the cards container
+            container.appendChild(card);
+        });
+    }
+        //Run the getUsers function
+    getUsers();
+        // Your JavaScript here
+        // 1. Fetch the data
+        // 2. Loop through the items and create cards
+        // 3. Add the cards to the container
+        
+    </script>
+
+    <style>
+        /* Your CSS here
+           Requirements:
+           - Cards should be the same size
+           - Use CSS Grid for a 3-column layout
+           - Responsive design: cards should stack on mobile
+        */
+        /*The container holds all of the cards*/
+        .cards-container {
+            display: grid;
+            /*Create three equal columns*/
+            grid-template-columns: repeat(3, 1fr);
+            /*Space between the cards*/
+            gap: 20px;
+            /*Add space around the outside*/
+            padding: 20px;
+        }
+        /*The appearance of each individual card*/
+        .card{
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            /*Makes the card stretch to the same height*/
+            height: 100%;
+            /*Prevents padding from making the cards larger than expected*/
+            box-sizing: border-box;
+        }
+        /*Makes the user's picture fit nicely*/
+        .card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        /*Make the user's name look like a heading*/
+        .card h2{
+            margin:10px 0;
+        }
+        /*Make the email look slightly different*/
+        .card p{
+            color: #555;
+        }
+        /*Change to one column on smaller screens*/
+        @media(max-width:600px){
+            .cards-container{
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>
