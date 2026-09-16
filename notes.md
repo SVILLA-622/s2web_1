@@ -576,10 +576,108 @@ p {
 
 
 
+Want things side-by-side? → display: flex
+
+Want space between them? → gap
+
+Want things centred? → justify-content / align-items
+
+Want space inside? → padding
+
+Want space outside? → margin
+
+Want a background? → background-color
+
+Want an outline? → border
+
+Want rounded corners? → border-radius
+
+Want text bigger? → font-size
+
+Want text a different colour? → color
+
+Want rows + columns? → display: grid
+
+Sure — here are the main `display` values visually:
+
+### `display: block`
+
+```text
+┌──────────────────────┐
+│      Element 1       │
+└──────────────────────┘
+┌──────────────────────┐
+│      Element 2       │
+└──────────────────────┘
+```
+
+**Block = each element gets its own line.**
+
+---
+
+### `display: inline`
+
+```text
+┌────────┐ ┌────────┐ ┌────────┐
+│ Item 1 │ │ Item 2 │ │ Item 3 │
+└────────┘ └────────┘ └────────┘
+```
+
+**Inline = elements stay on the same line.**
+
+---
+
+### `display: inline-block`
+
+```text
+┌────────┐  ┌────────┐  ┌────────┐
+│ Item 1 │  │ Item 2 │  │ Item 3 │
+└────────┘  └────────┘  └────────┘
+```
+
+**Inline-block = stays on the same line, but can behave more like a box** (width, height, padding, etc.).
+
+---
+
+### `display: flex`
+
+```text
+┌────────┐   ┌────────┐   ┌────────┐
+│ Item 1 │   │ Item 2 │   │ Item 3 │
+└────────┘   └────────┘   └────────┘
+        ← arranged together →
+```
+
+**Flex = easily arranges child elements in a row or column.**
+
+---
+
+### `display: grid`
+
+```text
+┌────────┐ ┌────────┐ ┌────────┐
+│ Item 1 │ │ Item 2 │ │ Item 3 │
+└────────┘ └────────┘ └────────┘
+
+┌────────┐ ┌────────┐ ┌────────┐
+│ Item 4 │ │ Item 5 │ │ Item 6 │
+└────────┘ └────────┘ └────────┘
+```
+
+**Grid = arranges child elements into rows and columns.**
+
+
+**Block** → down
+**Inline** → across
+**Inline-block** → across + box
+**Flex** → arrange in a row/column
+**Grid** → rows + columns
 
 
 
-
+center → put the group in the middle
+space-between → spread items across the available space
+space-around → space around each item
 
 
 
