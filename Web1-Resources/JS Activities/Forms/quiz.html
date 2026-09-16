@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <!-- Title shown on the browser tab -->
+    <title>My Quiz</title>
+
+    <!-- Connect the CSS file to this HTML file -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- Main heading -->
+    <h1>My Awesome Quiz</h1>
+
+
+    <!--
+        This form contains all of our quiz questions.
+        JavaScript will check the answers when
+        the user submits the form.
+    -->
+    <form id="quiz-form">
+
+
+        <!-- ==========================================
+             QUESTION 1 - RADIO BUTTONS
+             ========================================== -->
+
+        <div class="question">
+
+            <p>1. Which language are we learning?</p>
+
+            <!--
+                Radio buttons with the same name
+                mean the user can choose ONE answer.
+            -->
+
+            <input type="radio" name="q1" value="html" id="html">
+            <label for="html">HTML</label>
+
+            <br>
+
+            <input type="radio" name="q1" value="javascript" id="javascript">
+            <label for="javascript">JavaScript</label>
+
+            <br>
+
+            <input type="radio" name="q1" value="python" id="python">
+            <label for="python">Python</label>
+
+        </div>
+
+
+        <!-- ==========================================
+             QUESTION 2 - CHECKBOXES
+             ========================================== -->
+
+        <div class="question">
+
+            <p>2. Which of these are programming languages?</p>
+
+            <!--
+                Checkboxes allow the user to choose
+                MULTIPLE answers.
+            -->
+
+            <input type="checkbox" name="q2" value="javascript" id="q2-javascript">
+            <label for="q2-javascript">JavaScript</label>
+
+            <br>
+
+            <input type="checkbox" name="q2" value="css" id="q2-css">
+            <label for="q2-css">CSS</label>
+
+            <br>
+
+            <input type="checkbox" name="q2" value="python" id="q2-python">
+            <label for="q2-python">Python</label>
+
+            <br>
+
+            <input type="checkbox" name="q2" value="banana" id="q2-banana">
+            <label for="q2-banana">Banana</label>
+
+        </div>
+
+
+        <!-- ==========================================
+             QUESTION 3 - TEXT INPUT
+             ========================================== -->
+
+        <div class="question">
+
+            <p>3. What does HTML stand for?</p>
+
+            <!-- Text box for the user's answer -->
+            <input type="text" id="q3" name="q3">
+
+        </div>
+
+
+        <!-- Submit button -->
+        <button type="submit" id="submit-btn">
+            Check Answers
+        </button>
+
+    </form>
+
+
+    <!--
+        JavaScript will put the quiz results
+        inside this div.
+    -->
+    <div id="results"></div>
+
+
+    <!-- Connect the JavaScript file to this HTML file -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>

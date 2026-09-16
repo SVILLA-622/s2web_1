@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <!-- The title that appears on the browser tab -->
+    <title>Pet Adoption Centre</title>
+
+    <style>
+
+        /* Changes the basic font and spacing for the whole page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        /* The basic style for each pet */
+        .pet {
+            border: 2px solid #ccc;
+            margin: 10px;
+            padding: 15px;
+        }
+
+        /* Green border means the pet is available */
+        .available {
+            border-color: green;
+        }
+
+        /* Red border and faded appearance means the pet is adopted */
+        .adopted {
+            border-color: red;
+            opacity: 0.5;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Main heading displayed on the webpage -->
+    <h1>Happy Paws Adoption Centre</h1>
+
+    <!--
+        This empty div is where JavaScript will put
+        all of the pet information.
+        
+        id="pet-list" allows JavaScript to find this div.
+    -->
+    <div id="pet-list"></div>
+
+
+    <script>
+
+        // ==========================================
+        // TASK 1 - CREATE PET DATA
+        // ==========================================
+
+        // Create an array called pets.
+        // The [] means this is an array.
+        let pets = [
+
+            // Each {} is one pet object.
+            // Each pet has a name, type, age and adopted status.
+            {
+                name: "Garfield",
+                type: "cat",
+                age: 3,
+                adopted: false
+            },
+
+            {
+                name: "Buddy",
+                type: "dog",
+                age: 5,
+                adopted: false
+            },
+
+            {
+                name: "Luna",
+                type: "cat",
+                age: 2,
+                adopted: false
+            },
+
+            {
+                name: "Max",
+                type: "dog",
+                age: 4,
+                adopted: false
+            }
+        ];
+
+
+        // ==========================================
+        // TASK 2 - DISPLAY ONE PET
+        // ==========================================
+
+        // Create a function called displayPet.
+        // "pet" is the object that we give to the function.
+        function displayPet(pet) {
+
+            // Create a variable to store the CSS class
+            // that the pet should use.
+            let cssClass;
+
+
+            // Check whether the pet has been adopted.
+            if (pet.adopted === true) {
+
+                // If adopted is true, use the
+                // "pet adopted" CSS classes.
+                cssClass = "pet adopted";
+            }
+
+            // If adopted is not true...
+            else {
+
+                // Use the "pet available" CSS classes.
+                cssClass = "pet available";
+            }
+
+
+            /*
+                Create the HTML for one pet.
+
+                Backticks ` ` allow us to create a
+                multi-line string.
+
+                ${pet.name} gets the pet's name.
+                ${pet.type} gets the pet's type.
+                ${pet.age} gets the pet's age.
+                ${pet.adopted} gets true or false.
+            */
+            let html = `
+                <div class="${cssClass}">
+                    <h2>${pet.name}</h2>
+                    <p>Type: ${pet.type}</p>
+                    <p>Age: ${pet.age}</p>
+                    <p>Adopted: ${pet.adopted}</p>
+                `;
+
+
+            // Return the HTML we created.
+            // This allows another part of the program
+            // to use this HTML.
+            return html;
+        }
+
+
+        // ==========================================
+        // TASK 3 - DISPLAY ALL PETS
+        // ==========================================
+
+        // Create a function called showAllPets.
+        function showAllPets() {
+
+            // Find the HTML element with the id "pet-list".
+            // This is the empty div we created earlier.
+            let container = document.getElementById("pet-list");
+
+
+            // Create an empty string.
+            // We will add each pet's HTML to this.
+            let html = "";
+
+
+            // Loop through every pet in the pets array.
+            // "pet" represents the current pet.
+            for (let pet of pets) {
+
+                // Call displayPet() for the current pet.
+                // Then add the returned HTML to our html string.
+                html = html + displayPet(pet);
+            }
+
+
+            // Put all of our HTML inside the pet-list div.
+            // This makes the pets appear on the webpage.
+            container.innerHTML = html;
+        }
+
+
+        // ==========================================
+        // TASK 4 - ADOPT A PET
+        // ==========================================
+
+        // Create a function called adoptPet.
+        // petName is the name of the pet we want to adopt.
+        function adoptPet(petName) {
+
+
+            // Loop through every pet in the pets array.
+            for (let pet of pets) {
+
+
+                // Check whether this pet's name
+                // matches the name we were given.
+                if (pet.name === petName) {
+
+                    // Change the pet's adopted property
+                    // from false to true.
+                    pet.adopted = true;
+                }
+            }
+
+
+            // Display the pets again so the webpage
+            // shows the updated adopted status.
+            showAllPets();
+        }
+
+
+        // ==========================================
+        // TASK 5 - TEST THE FUNCTIONS
+        // ==========================================
+
+        // Run showAllPets().
+        // This displays all four pets on the webpage.
+        showAllPets();
+
+
+        // Run adoptPet() and tell it to adopt Garfield.
+        // Garfield's adopted property changes from
+        // false to true.
+        adoptPet("Garfield");
+
+    </script>
+
+</body>
+
+</html>
