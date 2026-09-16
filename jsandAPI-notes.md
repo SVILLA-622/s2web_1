@@ -663,6 +663,94 @@ HTML page
 
 
 
+Yep — from the **MDN “What is JavaScript?” page**, these are the **new things to add** to your existing notes. I’ll leave out everything we already covered.
+
+### 🆕 New JavaScript concepts
+
+| If the question/task says…           | Think of…                        | What it does                                |
+| ------------------------------------ | -------------------------------- | ------------------------------------------- |
+| Run JavaScript when the page loads   | `<script>`                       | Adds JavaScript to an HTML page             |
+| Use a separate JS file               | `src="script.js"`                | Connects HTML to an external JS file        |
+| Load modern JavaScript               | `type="module"`                  | Loads JS as a module                        |
+| Make script wait until HTML is ready | `defer`                          | Delays script until HTML has been parsed    |
+| Run code after the page is loaded    | `DOMContentLoaded`               | Runs code when the HTML document is ready   |
+| Write a one-line comment             | `//`                             | Comment for one line                        |
+| Write a multi-line comment           | `/* */`                          | Comment across multiple lines               |
+| Create an HTML element               | `document.createElement()`       | Makes a new HTML element                    |
+| Add the new element to the page      | `.appendChild()`                 | Places it inside another element            |
+| Loop through multiple HTML elements  | `for...of`                       | Handles each element one at a time          |
+| Run code after a button is clicked   | `addEventListener("click", ...)` | Responds to a click                         |
+| Use an API                           | `fetch()`                        | Requests data from a server/API             |
+| Turn API response into usable data   | `response.json()`                | Converts JSON response into JavaScript data |
+| Run code on the server               | Node.js                          | Allows JavaScript outside the browser       |
+
+### ⭐ Important new idea: JavaScript APIs
+
+An **API** is basically **ready-made functionality that you can use instead of building everything yourself**.
+
+Two main types mentioned:
+
+```text
+APIs
+├── Browser APIs
+│   ├── DOM
+│   ├── Geolocation
+│   ├── Canvas
+│   └── Audio/Video
+│
+└── Third-party APIs
+    ├── Maps
+    ├── Social media
+    └── Other online services
+```
+
+### ⭐ Client-side vs server-side
+
+```text
+Client-side
+JavaScript
+   ↓
+User's browser/computer
+```
+
+```text
+Server-side
+JavaScript
+   ↓
+Server
+```
+
+So if you see **client-side JavaScript**, think:
+
+> **JavaScript running in the user's browser.**
+
+If you see **server-side JavaScript**, think:
+
+> **JavaScript running on the server.**
+
+### ⭐ Static vs dynamic
+
+**Static:**
+
+> Page shows the same content.
+
+**Dynamic:**
+
+> Page can change/update depending on what happens.
+
+For example:
+
+```text
+Click button
+     ↓
+JavaScript runs
+     ↓
+Page changes
+```
+
+That's **dynamic behaviour**.
+
+
 
 
 
