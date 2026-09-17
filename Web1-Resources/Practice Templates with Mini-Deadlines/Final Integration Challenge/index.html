@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie App</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .controls input,
+        .controls select {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        /* Grid */
+        .movies-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        /* Movie card */
+        .movie-card {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+
+            display: flex;
+            flex-direction: column;
+
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .movie-card h2 {
+            font-size: 20px;
+            margin: 15px 0 10px;
+        }
+
+        .movie-card p {
+            color: #555;
+        }
+
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+
+
+        /* Tablet */
+        @media (max-width: 900px) {
+
+            .movies-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        /* Mobile */
+        @media (max-width: 600px) {
+
+            .movies-container {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Animation Movies</h1>
+
+
+    <!-- Search and filter -->
+    <div class="controls">
+
+        <input
+            type="text"
+            id="search-input"
+            placeholder="Search movie title..."
+        >
+
+        <select id="year-filter">
+
+            <option value="all">
+                All Years
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- Movie cards -->
+    <div
+        class="movies-container"
+        id="movies-container"
+    >
+    </div>
+
+
+    <script>
+
+        const apiUrl =
+            "https://api.sampleapis.com/movies/animation";
+
+
+        // Store all movies
+        let movies = [];
+
+
+        // Get HTML elements
+        const container =
+            document.getElementById("movies-container");
+
+        const searchInput =
+            document.getElementById("search-input");
+
+        const yearFilter =
+            document.getElementById("year-filter");
+
+
+        // Fetch movies
+        async function getMovies() {
+
+            try {
+
+                const response =
+                    await fetch(apiUrl);
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Failed to fetch movies"
+                    );
+
+                }
+
+
+                movies =
+                    await response.json();
+
+
+                // Create year options
+                createYearOptions();
+
+
+                // Display movies
+                displayMovies(movies);
+
+
+            } catch (error) {
+
+                console.log(error);
+
+                container.innerHTML =
+                    "<p>Unable to load movies.</p>";
+
+            }
+
+        }
+
+
+        // Create year filter
+        function createYearOptions() {
+
+            // Get years
+            const years = movies
+                .map(movie => movie.year)
+                .filter(year => year);
+
+
+            // Remove duplicates
+            const uniqueYears =
+                [...new Set(years)];
+
+
+            // Sort years
+            uniqueYears.sort();
+
+
+            // Create options
+            uniqueYears.forEach(function(year) {
+
+                const option =
+                    document.createElement("option");
+
+
+                option.value = year;
+
+                option.textContent = year;
+
+
+                yearFilter.appendChild(option);
+
+            });
+
+        }
+
+
+        // Display movie cards
+        function displayMovies(data) {
+
+            // Clear container
+            container.innerHTML = "";
+
+
+            // No results
+            if (data.length === 0) {
+
+                const message =
+                    document.createElement("p");
+
+                message.className =
+                    "no-results";
+
+                message.textContent =
+                    "No movies found.";
+
+                container.appendChild(message);
+
+                return;
+
+            }
+
+
+            // Loop through movies
+            data.forEach(function(movie) {
+
+                // Create card
+                const card =
+                    document.createElement("div");
+
+                card.className =
+                    "movie-card";
+
+
+                // Create image
+                const image =
+                    document.createElement("img");
+
+
+                // Some APIs may have different
+                // image property names
+                image.src =
+                    movie.posterURL ||
+                    movie.poster ||
+                    movie.image;
+
+
+                image.alt =
+                    movie.title || "Movie";
+
+
+                // Create title
+                const title =
+                    document.createElement("h2");
+
+
+                title.textContent =
+                    movie.title || "Unknown title";
+
+
+                // Create year
+                const year =
+                    document.createElement("p");
+
+
+                year.textContent =
+                    "Year: " +
+                    (movie.year || "Unknown");
+
+
+                // Create description
+                const description =
+                    document.createElement("p");
+
+
+                description.textContent =
+                    movie.description ||
+                    "No description available.";
+
+
+                // Add elements
+                card.appendChild(image);
+
+                card.appendChild(title);
+
+                card.appendChild(year);
+
+                card.appendChild(description);
+
+
+                // Add card to page
+                container.appendChild(card);
+
+            });
+
+        }
+
+
+        // Search movies
+        function filterMovies() {
+
+            const searchText =
+                searchInput.value.toLowerCase();
+
+
+            const selectedYear =
+                yearFilter.value;
+
+
+            // Filter movies
+            const filteredMovies =
+                movies.filter(function(movie) {
+
+                    const title =
+                        (movie.title || "")
+                        .toLowerCase();
+
+
+                    // Search condition
+                    const matchesSearch =
+                        title.includes(searchText);
+
+
+                    // Year condition
+                    const matchesYear =
+                        selectedYear === "all" ||
+                        String(movie.year) === selectedYear;
+
+
+                    return matchesSearch &&
+                           matchesYear;
+
+                });
+
+
+            // Display results
+            displayMovies(filteredMovies);
+
+        }
+
+
+        // Search event
+        searchInput.addEventListener(
+            "input",
+            filterMovies
+        );
+
+
+        // Filter event
+        yearFilter.addEventListener(
+            "change",
+            filterMovies
+        );
+
+
+        // Start application
+        getMovies();
+
+    </script>
+
+</body>
+</html>
+
+•	DOM: document.createElement(), .textContent, .appendChild()
+•	API: fetch(), await response.json()
+•	Looping: .forEach()
+•	Filtering/events: .filter() + addEventListener()
+And the three CSS layouts you're likely to need:
+/* Flexbox */
+display: flex;
+
+/* Grid */
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+
+/* Responsive */
+@media (max-width: 600px) {
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}

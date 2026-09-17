@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template 3</title>
+
+    <style>
+
+        .filter-container {
+            padding: 20px;
+        }
+
+        .filter-container select {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            border: 1px solid #333;
+            padding: 15px;
+
+            display: flex;
+            flex-direction: column;
+
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card h2 {
+            margin: 10px 0;
+        }
+
+        .card p {
+            margin: 5px 0;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        /* Tablet */
+        @media (min-width: 601px) and (max-width: 900px) {
+
+            .cards-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="filter-container">
+
+        <label for="album-filter">
+            Filter by Album:
+        </label>
+
+        <select id="album-filter">
+            <option value="all">All</option>
+        </select>
+
+    </div>
+
+    <div class="cards-container" id="cards-container">
+        <!-- Cards added using JavaScript -->
+    </div>
+
+    <script>
+
+        const apiUrl = "https://jsonplaceholder.typicode.com/photos?_limit=20";
+
+        // Store all the data
+        let photos = [];
+
+        const container = document.getElementById("cards-container");
+
+        const filter = document.getElementById("album-filter");
+
+
+        // Fetch the data
+        async function getPhotos() {
+
+            try {
+
+                const response = await fetch(apiUrl);
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch data");
+                }
+
+                photos = await response.json();
+
+                // Create dropdown options
+                createFilterOptions();
+
+                // Display all cards
+                displayCards(photos);
+
+            } catch (error) {
+
+                console.log(error);
+
+                container.textContent = "Error loading photos.";
+
+            }
+
+        }
+
+
+        // Create album dropdown options
+        function createFilterOptions() {
+
+            // Get unique album IDs
+            const albumIds = [...new Set(
+                photos.map(photo => photo.albumId)
+            )];
+
+            // Add each album ID
+            albumIds.forEach(function(albumId) {
+
+                const option = document.createElement("option");
+
+                option.value = albumId;
+
+                option.textContent = "Album " + albumId;
+
+                filter.appendChild(option);
+
+            });
+
+        }
+
+
+        // Display cards
+        function displayCards(data) {
+
+            // Clear existing cards
+            container.innerHTML = "";
+
+            // Check if there are no results
+            if (data.length === 0) {
+
+                container.textContent = "No photos found.";
+
+                return;
+
+            }
+
+            // Loop through data
+            data.forEach(function(photo) {
+
+                // Create card
+                const card = document.createElement("div");
+
+                card.className = "card";
+
+
+                // Create image
+                const image = document.createElement("img");
+
+                image.src = photo.thumbnailUrl;
+
+                image.alt = photo.title;
+
+
+                // Create title
+                const title = document.createElement("h2");
+
+                title.textContent = photo.title;
+
+
+                // Create album ID
+                const album = document.createElement("p");
+
+                album.textContent = "Album ID: " + photo.albumId;
+
+
+                // Add everything to card
+                card.appendChild(image);
+
+                card.appendChild(title);
+
+                card.appendChild(album);
+
+
+                // Add card to container
+                container.appendChild(card);
+
+            });
+
+        }
+
+
+        // Detect when dropdown changes
+        filter.addEventListener("change", function() {
+
+            const selectedAlbum = filter.value;
+
+            // If All is selected
+            if (selectedAlbum === "all") {
+
+                displayCards(photos);
+
+            } else {
+
+                // Filter the photos
+                const filteredPhotos = photos.filter(function(photo) {
+
+                    return photo.albumId == selectedAlbum;
+
+                });
+
+                // Display filtered photos
+                displayCards(filteredPhotos);
+
+            }
+
+        });
+
+
+        // Start the application
+        getPhotos();
+
+    </script>
+
+</body>
+</html>
+
