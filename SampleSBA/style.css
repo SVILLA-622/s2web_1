@@ -1,0 +1,118 @@
+/* Task 2 and Task 5: your styles go here */
+/* display: flex on #featured so the image and text sit side by side
+gap between the image and the text block
+Cover image at a fixed width of 180px; it must not stretch
+.description hidden by default — add a class that reveals it when toggled (Task 3 handles the JS)
+Header and footer styled to match the mockup (font, colour, padding)
+A background colour for the page
+Use these colours so your page matches the mockup:
+
+Where	Colour
+Page background (body)	#eef1f0
+Header and footer background	#22302d
+Header and footer text	#ffffff
+Featured panel and card background	#ffffff
+Button background	#3c7d6f
+Body text	#1f2a28
+*/
+/* =========================
+   TASK 2 - FEATURED ITEM
+   ========================= */
+
+body {
+    margin: 0;
+    background-color: #eef1f0;
+    color: #1f2a28;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #22302d;
+    color: #ffffff;
+    padding: 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+main {
+    padding: 30px;
+}
+
+/* Featured item */
+#featured {
+    display: flex;
+    gap: 25px;
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+#featured img {
+    width: 180px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.featured-info {
+    flex: 1;
+}
+
+.featured-info h2 {
+    margin-top: 0;
+}
+
+/* Description hidden by default */
+.description {
+    display: none;
+}
+
+/* Show description when class is added */
+.description.show {
+    display: block;
+}
+
+/* Button */
+button {
+    background-color: #3c7d6f;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Footer */
+footer {
+    background-color: #22302d;
+    color: #ffffff;
+    padding: 20px;
+    margin-top: 30px;
+    text-align: center;
+}
+/* =========================
+   TASK 5 - CARD GRID
+   ========================= */
+
+/* Grid */
+#card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Cards */
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Card covers */
+.card img {
+    width: 140px;
+    height: auto;
+}
