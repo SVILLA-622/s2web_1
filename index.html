@@ -10,6 +10,55 @@
         <!-- Do not hardcode the content here, use JavaScript -->
     </div>
 
+    <style>
+        /* Card styling */
+        .card {
+            width: 300px;
+            border: 1px solid #333;
+            color: #333;
+            padding: 20px;
+            box-sizing: border-box;
+
+            /* Flexbox */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .card h3 {
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .card p {
+            margin: 5px 0;
+        }
+
+        .genres {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .genre {
+            background-color: #eee;
+            padding: 5px 8px;
+            border-radius: 5px;
+        }
+    </style>
+
     <script>
         const book = {
             "id": 42,
@@ -27,37 +76,22 @@
         const card = document.querySelector('#book-card');
 
         card.innerHTML = `
+        <img src="${book.imageUrl}" alt="${book.title}"</p>
         <h2>${book.title}</h2>
         <p>Author: ${book.author}</p>
         <p>Year: ${book.year}</p>
         <p id="genres">Genres: </p> 
         <p>Pages: ${book.pages}</p>
         <p>Language: ${book.language}</p>
-        <img src="${book.imageUrl}" alt="${book.title}"</p>
-        `
+               `
 
         const bookGenre = document.querySelector("#genres")
         book.genres.forEach((genre)=>{
           bookGenre.textContent += genre + ", " 
         })
-        console.log(bookGenre.textContent);
-        
-
-
-
-
+        console.log(bookGenre.textContent)
 
     </script>
-
-    <style>
-        /* Your CSS here
-           Requirements:
-           - Card width of 300px with a border
-           - Text color #333
-           - Title 1.5 times as big as base font
-           - Headings should be uppercase
-           - Use flexbox for layout
-        */
-    </style>
+ 
 </body>
 </html>
